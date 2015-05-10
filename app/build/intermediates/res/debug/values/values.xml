@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/David/SkyDrive/AndroidStudioProjects/SimpleReceipts/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">SimpleReceipt</string>
+    <string name="btn1">Print</string>
+</resources>
