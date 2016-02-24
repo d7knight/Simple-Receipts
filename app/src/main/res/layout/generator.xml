@@ -1,48 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	
-	<LinearLayout android:id="@+id/widget115"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:orientation="vertical">
-		<Button android:id="@+id/resend" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="View/Resend Old Receipts"
-		android:textSize="25sp" android:onClick="viewer">
-	</Button>
-		<TextView android:id="@+id/widget116" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Customer Name:"
-			android:textSize="26sp">
-		</TextView>
-		<AutoCompleteTextView android:id="@+id/name1"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:textSize="26sp" android:textColor="#ff000000"
-			android:imeOptions="actionDone">
-		</AutoCompleteTextView>
-		<TextView android:id="@+id/widget119" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Amount Received:"
-			android:textSize="26sp">
-		</TextView>
-		<EditText android:id="@+id/amount1" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textSize="26sp"
-			android:textColor="#ff000000" android:numeric="decimal"
-			android:imeOptions="actionDone">
-		</EditText>
-		<TextView android:id="@+id/comments" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Additional Comments (optional):"
-			android:textSize="26sp"></TextView>
-		<EditText android:id="@+id/commentes" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textSize="26sp"
-			android:textColor="#ff000000" android:imeOptions="actionDone">
-		</EditText>
-		<Button android:id="@+id/submit1" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Generate Receipt"
-			android:textSize="26sp" android:onClick="submit">
-		</Button>
-		<Button android:id="@+id/clear1" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Clear"
-			android:textSize="15sp" android:onClick="clear">
-		</Button>
-	</LinearLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/widget115"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/widget116"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receipt for/Customer name:"
+            android:textColor="@android:color/black"
+            android:textSize="23sp"></TextView>
+
+        <AutoCompleteTextView
+            android:id="@+id/name1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+
+            android:singleLine="true"
+            android:textColor="@android:color/black"></AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/widget119"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount Received:"
+            android:textColor="@android:color/black"
+
+            android:textSize="23sp"></TextView>
+
+        <EditText
+            android:id="@+id/amount1"
+            android:layout_width="fill_parent"
+
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:numeric="decimal"
+            android:textColor="@android:color/black"></EditText>
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional Comments (optional):"
+            android:textColor="@android:color/black"
+            android:textSize="23sp"></TextView>
+
+        <EditText
+            android:id="@+id/commentes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:textColor="@android:color/black"></EditText>
+
+        <Button
+            android:id="@+id/submit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="submit"
+            android:text="Generate Receipt"
+            android:textSize="26sp"></Button>
+
+        <Button
+            android:id="@+id/clear1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clear"
+            android:text="Clear"></Button>
+
+        <Button
+            android:id="@+id/resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:onClick="viewer"
+            android:text="View/Resend Old Receipts" />
+
+    </LinearLayout>
 </ScrollView>

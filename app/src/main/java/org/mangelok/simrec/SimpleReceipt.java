@@ -1,10 +1,14 @@
 package org.mangelok.simrec;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,39 +32,72 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SimpleReceipt extends Activity {
+public class SimpleReceipt extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-	public static String storageDir = "/mnt/sdcard/simplereceipts/";
 	public ArrayList<String> autoFields;
 	private Context appContext;
 	private AutoCompleteTextView cName;
+	static String storageDir = Environment.getExternalStorageDirectory().getPath() + "/simplereceipts/";
+    private int permissionsRequestCode;
+    private static final String[] permissionsDesired = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
-	/** Called when the activity is first created. */
+    /** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.generator);
 		appContext = this;
-		autoFields = new ArrayList<String>();
-		this.cName = (AutoCompleteTextView) findViewById(R.id.name1);
-		File f = new File(storageDir);
-		File u = new File(storageDir + "fields.txt");
-		if (!f.exists() || !u.exists()) {
-			try {
-				f.mkdirs();
-				u.createNewFile();
-			} catch (IOException ex) {
-				Logger.getLogger(SimpleReceipt.class.getName()).log(
-						Level.SEVERE, null, ex);
-			}
-		}
+        askForPermissions();
+    }
 
-		try {
-			initField();
-		} catch (FileNotFoundException ex) {
-			Log.e("ERROR", ex.getMessage());
-		}
-	}
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode != permissionsRequestCode) {
+            Log.e("MAK", "Permission result code unexpected.. Weird.");
+        }
+        askForPermissions();
+    }
+
+    private void askForPermissions() {
+        permissionsRequestCode = (int) (Math.random() * 1000.0);
+
+        int isWriteAllowed = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int isReadAllowed = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (isReadAllowed != PackageManager.PERMISSION_GRANTED && isWriteAllowed != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Please grant permission to write to your files, or else creating a price list will fail", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, permissionsDesired, permissionsRequestCode);
+        } else {
+            onPermissionGranted();
+        }
+    }
+
+    private void onPermissionGranted(){
+        autoFields = new ArrayList<String>();
+        this.cName = (AutoCompleteTextView) findViewById(R.id.name1);
+        File f = new File(storageDir);
+        File u = new File(storageDir + "fields.txt");
+        if (!f.exists() || !u.exists()) {
+            try {
+                f.mkdirs();
+                u.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(SimpleReceipt.class.getName()).log(
+                        Level.SEVERE, null, ex);
+            }
+        }
+
+        try {
+            initField();
+        } catch (FileNotFoundException ex) {
+            Log.e("ERROR", ex.getMessage());
+        }
+    }
 
 	public void viewer(View v) {
 		Intent i = new Intent(this, Viewer.class);
@@ -85,28 +122,6 @@ public class SimpleReceipt extends Activity {
 		} catch (Exception e) {
 			Log.e("writeField", "ERROR " + e.getMessage());
 
-		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		try {
-			initField();
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(SimpleReceipt.class.getName()).log(Level.SEVERE,
-					null, ex);
-		}
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		try {
-			initField();
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(SimpleReceipt.class.getName()).log(Level.SEVERE,
-					null, ex);
 		}
 	}
 
